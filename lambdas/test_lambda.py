@@ -19,5 +19,5 @@ class TestLambdaHandler:
         result = lambda_handler.handler(event, context)
         assert result == {
             'statusCode': 200,
-            'body': "Received Message Body from API GW: Hello"
+            'body': "Received Message Body : Hello"
         }
