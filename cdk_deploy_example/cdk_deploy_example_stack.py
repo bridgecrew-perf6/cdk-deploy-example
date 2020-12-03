@@ -75,7 +75,8 @@ class CdkDeployExampleStack(core.Stack):
             trigger=codepipeline_actions.GitHubTrigger.POLL,
             # Replace these with your actual GitHub project info
             owner="wowzoo",
-            repo="cdk-deploy-example"
+            repo="cdk-deploy-example",
+            branch="main"
         )
 
         codepipeline.Pipeline(
@@ -90,7 +91,7 @@ class CdkDeployExampleStack(core.Stack):
                     stage_name="Build",
                     actions=[
                         codepipeline_actions.CodeBuildAction(
-                            action_name="Lambda_Build",
+                            action_name="Lambda_Test",
                             project=lambda_build,
                             input=source_output,
                             outputs=[lambda_build_output]),
