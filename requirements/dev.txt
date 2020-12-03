@@ -1,0 +1,3 @@
+-r deploy.txt
+-r test.txt
+boto3==1.16.28
