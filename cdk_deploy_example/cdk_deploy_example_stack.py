@@ -1,13 +1,3 @@
-
-# class CdkDeployExampleStack(core.Stack):
-#
-#     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
-#         super().__init__(scope, construct_id, **kwargs)
-#
-#         # The code that defines your stack goes here
-
-
-
 from aws_cdk import (
     core,
     aws_codebuild as codebuild,
@@ -21,15 +11,9 @@ from aws_cdk import (
 
 class CdkDeployExampleStack(core.Stack):
 
-    def __init__(self, scope: core.Construct, id: str, *, repo_name: str = None,
+    def __init__(self, scope: core.Construct, construct_id: str, *,
                  lambda_code: lambda_.CfnParametersCode = None, **kwargs) -> None:
-        super().__init__(scope, id, **kwargs)
-
-        code = codecommit.Repository.from_repository_name(
-            self,
-            "ImportedRepo",
-            repo_name
-        )
+        super().__init__(scope, construct_id, **kwargs)
 
         cdk_build = codebuild.PipelineProject(
             self,
@@ -122,9 +106,8 @@ class CdkDeployExampleStack(core.Stack):
                     actions=[
                         codepipeline_actions.CloudFormationCreateUpdateStackAction(
                             action_name="Lambda_CFN_Deploy",
-                            template_path=cdk_build_output.at_path(
-                                "LambdaStack.template.json"),
-                            stack_name="LambdaDeploymentStack",
+                            template_path=cdk_build_output.at_path("LambdaStack.template.json"),
+                            stack_name="CdkDeployExampleLambdaStack",
                             admin_permissions=True,
                             parameter_overrides=dict(
                                 lambda_code.assign(
